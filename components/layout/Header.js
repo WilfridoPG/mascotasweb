@@ -5,7 +5,7 @@ import Navegation from "./Navegation";
 import styled from "@emotion/styled";
 import { css } from "@emotion/core";
 import Boton from "../ui/Boton";
-import { FirebaseContext } from "../../firebase";
+import { FirebaseContext } from "../../firebase/index";
 
 const ContenedorHeader = styled.div`
   max-width: 1200px;

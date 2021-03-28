@@ -1,42 +1,43 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Layout from "../components/layout/Layout";
-import {css} from '@emotion/core';
-import {Formulario,Campo,InputSubmit,Error} from "../components/ui/formulario"
-import validarCrearCuenta from '../validacion/validarCrearCuenta'
-import firebase from '../firebase';
-import Router  from 'next/router'
+import { css } from "@emotion/core";
+import {
+  Formulario,
+  Campo,
+  InputSubmit,
+  Error,
+} from "../components/ui/formulario";
+import validarCrearCuenta from "../validacion/validarCrearCuenta";
+import firebase from "../firebase/index";
+import Router from "next/router";
 //validaciones
-import useValidacion from '../hooks/useValidacion'
-const STATE_INICIAL={
-    nombre:"",
-    email:"",
-    password:""
-}
+import useValidacion from "../hooks/useValidacion";
+const STATE_INICIAL = {
+  nombre: "",
+  email: "",
+  password: "",
+};
 const CrearCuenta = () => {
-    const [error,guardarError]=useState(false);
-    const {
-        valores,
-        errores,
-        handleSubmit,
-        handleChange,
-        handleBluer
-    }=useValidacion(STATE_INICIAL,validarCrearCuenta,crearCuenta);
+  const [error, guardarError] = useState(false);
+  const {
+    valores,
+    errores,
+    handleSubmit,
+    handleChange,
+    handleBluer,
+  } = useValidacion(STATE_INICIAL, validarCrearCuenta, crearCuenta);
 
-    const {nombre,email,password}=valores;
+  const { nombre, email, password } = valores;
 
-   async function crearCuenta(){
-    try{
-        await  firebase.registrar(nombre,email,password);
-        Router.push("/");
-
-    }catch(error){
+  async function crearCuenta() {
+    try {
+      await firebase.registrar(nombre, email, password);
+      Router.push("/");
+    } catch (error) {
       console.error("hubo un erro al crear el usuario ", error);
       guardarError(error.message);
-      
-        
     }
-      
-    }
+  }
 
   return (
     <div>
@@ -44,15 +45,13 @@ const CrearCuenta = () => {
         <>
           <h1
             css={css`
-                text-align:center;
-                margin-top:5rem;
-            `
-            }
-          >crear cuenta</h1>
-          <Formulario
-            onSubmit={handleSubmit}
-            noValidate
+              text-align: center;
+              margin-top: 5rem;
+            `}
           >
+            crear cuenta
+          </h1>
+          <Formulario onSubmit={handleSubmit} noValidate>
             <Campo>
               <label htmlFor="nombre"> Nombre</label>
               <input
@@ -65,7 +64,7 @@ const CrearCuenta = () => {
                 onBlur={handleBluer}
               />
             </Campo>
-        {errores.nombre && <Error>{errores.nombre}</Error>}
+            {errores.nombre && <Error>{errores.nombre}</Error>}
             <Campo>
               <label htmlFor="email"> Email</label>
               <input
@@ -93,11 +92,7 @@ const CrearCuenta = () => {
             </Campo>
             {errores.password && <Error>{errores.password}</Error>}
             {error && <Error>{error}</Error>}
-            <InputSubmit type="Submit"
-                value="Crear Cuenta"
-            />
-
-
+            <InputSubmit type="Submit" value="Crear Cuenta" />
           </Formulario>
         </>
       </Layout>

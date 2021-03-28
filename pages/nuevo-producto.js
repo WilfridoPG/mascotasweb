@@ -9,7 +9,7 @@ import {
   Error,
 } from "../components/ui/formulario";
 import validarCrearProducto from "../validacion/validarCrearProducto";
-import { FirebaseContext } from "../firebase";
+import { FirebaseContext } from "../firebase/index";
 import Router, { useRouter } from "next/router";
 //validaciones
 import useValidacion from "../hooks/useValidacion";
